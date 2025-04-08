@@ -24,6 +24,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/cart', [CartController::class, 'viewCart']);
     Route::delete('/cart/{id}', [CartController::class, 'removeFromCart']);
 
+    // Order Routes
+    Route::post('/checkout', [OrderController::class, 'checkout']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/my-orders', [OrderController::class, 'myOrders']);
+    Route::middleware('auth:sanctum')->get('/orders/{id}', [OrderController::class, 'show']);
+    Route::middleware(['auth:sanctum'])->put('/orders/{id}/complete', [OrderController::class, 'markAsComplete']);
+
+
 });
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
